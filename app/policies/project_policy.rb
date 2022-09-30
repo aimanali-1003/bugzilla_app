@@ -32,16 +32,4 @@ class ProjectPolicy < ApplicationPolicy
 
     false
   end
-
-  def delete?
-    return true if @user.Manager?
-
-    false
-  end
-
-  def can_create_bug?
-    return true if @user.role == 'QA' && @user.project_enrollment.include?(@record)
-
-    false
-  end
 end

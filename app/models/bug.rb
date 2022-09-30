@@ -12,12 +12,6 @@ class Bug < ApplicationRecord
   enum bugtype: { Bug: 0, Feature: 1 }
   enum status: { New: 0, Started: 1, Completed: 2, Resolved: 3 }
 
-  def thumbline(input)
-    images[input].variant(resize: '300x300!').processed
-  end
-
-  private
-
   def image_type
     images.each do |image|
       errors.add(:images, 'needs to be PNG or GIF') unless image.content_type.in?(%('image/png image/gif))
