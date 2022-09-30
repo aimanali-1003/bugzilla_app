@@ -39,7 +39,7 @@ class BugsController < ApplicationController
   def show; end
 
   def status
-    if @bug.update(status: params[:status])
+    if @bug.update(status: params[:status].to_i)
       redirect_to [@project, @bug], notice: 'Bug updated'
     else
       flash[:alert] = 'Status not updated'

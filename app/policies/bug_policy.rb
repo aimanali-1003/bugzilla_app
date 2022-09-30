@@ -7,11 +7,6 @@ class BugPolicy < ApplicationPolicy
     end
   end
 
-  def initialize(user, bug)
-    @user = user
-    @bug = bug
-  end
-
   def new?
     return true if @user.QA?
 
@@ -25,24 +20,24 @@ class BugPolicy < ApplicationPolicy
   end
 
   def edit?
-    return true if @bug.posted_by == @user
+    return true if @record.posted_by == @user
 
     false
   end
 
   def show?
-    return true if @bug.posted_by == @user || @user.project_enrollment.include?(@bug.project)
+    return true if @record.posted_by == @user || @user.project_enrollment.include?(@record.project)
 
     false
   end
 
   def update?
-    return true if (@user.Developer? && @user.project_enrollment.include?(@bug.project)) || @bug.posted_by == @user
+    return true if @user.Developer? && @user.project_enrollment.include?(@record.project) || @record.posted_by == @user
 
     false
   end
 
-  def pick_drop
+  def status?
     return true if @user.Developer?
 
     false
